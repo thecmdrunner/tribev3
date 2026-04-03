@@ -33,3 +33,12 @@ wandb/
 
 # OS
 .DS_Store
+
+# Large media files
+*.mp4
+*.wav
+*.tsv
+
+# Runtime directories
+uploads/
+output/

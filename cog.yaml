@@ -1,0 +1,48 @@
+build:
+  python_version: "3.11"
+  gpu: true
+  cuda: "12.4"
+
+  system_packages:
+    - ffmpeg
+    - libsndfile1
+    - git
+
+  python_packages:
+    - "torch==2.5.1"
+    - "torchvision==0.20.1"
+    - "numpy==2.2.6"
+    - "neuralset==0.0.2"
+    - "neuraltrain==0.0.2"
+    - "x_transformers==1.27.20"
+    - "einops"
+    - "pyyaml"
+    - "moviepy>=2.2.1"
+    - "huggingface_hub"
+    - "gtts"
+    - "langdetect"
+    - "spacy"
+    - "soundfile"
+    - "Levenshtein"
+    - "julius"
+    - "transformers"
+    # plotting
+    - "nibabel"
+    - "matplotlib"
+    - "seaborn"
+    - "colorcet"
+    - "nilearn"
+    - "scipy"
+    - "scikit-image"
+
+  run:
+    # Install uv (needed for uvx whisperx)
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    # Install tribev2 package in editable mode
+    - pip install -e .
+    # Pre-download spacy model
+    - python -m spacy download en_core_web_lg
+    # Pre-cache WhisperX so first prediction doesn't download it
+    - /root/.local/bin/uvx whisperx --help || true
+
+predict: "predict.py:Predictor"
